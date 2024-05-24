@@ -8,21 +8,31 @@ import os
 def main():
     video_instance = VideoToImage("assets", "sky.mov")
     video_settings = video_instance.video_to_image()
+
     ascii_frames_dir = make_temp_dir("assets", "ascii_frames")
     count = 0
+
     for subdir, dirs, files in os.walk(video_settings):
         for file in files:
             ascii_instance = FrameConvert(subdir, file)
-            ascii_instance.get_frame()
-            ascii_instance.frame_resize(280)
-            ascii_ll = ascii_instance.frame_to_ll()
+            ascii_instance.frame_resize(16)
+            ascii_instance.make_ascii()
+            ascii_instance.ascii_to_frame(ascii_frames_dir, count)
+            count += 1
+    print("{} frames have been converted").format(count)
+
+    """
+    for subdir, dirs, files in os.walk(video_settings):
+        for file in files:
+            ascii_instance = FrameConvert(subdir, file)
+            ascii_ll = ascii_instance.frame_resize(16)
             ascii_instance = FrameManipulation(ascii_ll)
             ascii_instance.make_bnw()
             ascii_instance.make_ascii()
             ascii_instance.ascii_to_frame(ascii_frames_dir, count)
             count += 1
     print("{} frames have been converted").format(count)
-    """
+
     ascii_instance = FrameConvert(video_settings[0])
     ascii_instance.get_frame()
     ascii_instance.frame_resize(280)
@@ -40,6 +50,8 @@ if __name__ == "__main__":
 
 """
 
+TODO:
+- reverse input string and make background white
 
 
 FONTS and WIDTH
