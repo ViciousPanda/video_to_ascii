@@ -30,7 +30,7 @@ class Menu:
     def construct(self, class_name):
         menu_lst = []
         for key, value in class_name.__dict__.items():
-            if "function" in str(value):
+            if "function" in str(value) and key != "__init__":
                 menu_lst.append(key)
         self.dct = dict(enumerate(menu_lst, start=1))
 
@@ -46,7 +46,7 @@ class Menu:
 
     # draw main menu
     def draw(self):
-        self.cls()
+        # self.cls()
         for key, value in self.dct.items():
             print("[ {} ] for {}".format(key, value))
         self.user_input()
